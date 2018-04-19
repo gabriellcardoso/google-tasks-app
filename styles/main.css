@@ -1,0 +1,34 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: #FAFAFA;
+}
+
+#google-tasks { 
+    width: 100%;
+    height: 100%;
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+}
+
+.list-view {
+    box-sizing: border-box;
+    max-width: 960px;
+    min-width: 320px;
+    width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.list-view .container {
+    width: 100%;
+}
+
+.action-button {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+}
