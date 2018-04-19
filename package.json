@@ -1,0 +1,52 @@
+{
+  "name": "google-tasks-app",
+  "version": "0.1.0",
+  "description": "A Google tasks web application",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/webpack",
+    "dev": "./node_modules/.bin/webpack-dev-server",
+    "start": "google-chrome index.html",
+    "test": "./node_modules/.bin/jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabriellcardoso/google-tasks-app.git"
+  },
+  "keywords": [
+    "google",
+    "tasks",
+    "app"
+  ],
+  "author": "gabriellcardoso",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gabriellcardoso/google-tasks-app/issues"
+  },
+  "homepage": "https://github.com/gabriellcardoso/google-tasks-app#readme",
+  "dependencies": {
+    "@types/react": "^16.3.11",
+    "@types/react-dom": "^16.0.5",
+    "@types/react-redux": "^5.0.16",
+    "@types/react-router-dom": "^4.2.6",
+    "@types/redux": "^3.6.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "redux": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.3",
+    "@types/react-test-renderer": "^16.0.1",
+    "awesome-typescript-loader": "^5.0.0",
+    "jest": "^22.4.3",
+    "react-test-renderer": "^16.3.2",
+    "source-map-loader": "^0.2.3",
+    "ts-jest": "^22.4.4",
+    "typescript": "^2.8.1",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.14",
+    "webpack-dev-server": "^3.1.3"
+  }
+}
