@@ -6,8 +6,8 @@ import {
     TextField
 } from 'material-ui';
 
-import { DeleteButton } from './DeleteButton';
 import { Task } from 'models/Task';
+import { DeleteButton } from './DeleteButton';
 
 const style: React.CSSProperties = {
     paddingTop: 0,
@@ -16,31 +16,85 @@ const style: React.CSSProperties = {
 };
 
 interface TaskItemProps {
-    index: React.Key;
     task: Task;
+    onPressEnter: () => void;
+    onUpdate: (taskId: number, text: string) => void;
+    onToggle: (taskId: number) => void;
+    onDelete: (taskId: number) => void;
 }
 
 interface TaskItemState { }
 
 class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
 
+    componentWillMount(): void {
+        this.setState({ text: this.props.task.text });
+    }
+
     render(): React.ReactElement<any> | false {
-        const { task, index } = this.props;
+        const {
+            task,
+            onToggle,
+            onDelete
+        } = this.props;
+
+        const checkbox = this.getTaskCheckbox();
+        const taskItemMenu = this.getTaskItemMenu(task);
+        const fieldClassName = task.completed ? 'completed' : null;
+
         return (
             <ListItem
-                leftCheckbox={<Checkbox checked={task.completed} />}
-                rightIconButton={<div><DeleteButton /></div>}
+                leftCheckbox={checkbox}
+                rightIconButton={taskItemMenu}
                 style={style}
             >
                 <TextField
+                    className={fieldClassName}
                     value={task.text}
-                    hintText={`Task #${index}`}
+                    fullWidth={true}
                     underlineShow={false}
-                    fullWidth={false}
+                    onChange={event => this.updateText(event)}
+                    onKeyPress={event => this.handleKeyPress(event)}
                 />
             </ListItem>
         );
     }
+
+    private getTaskCheckbox(): React.ReactElement<any> {
+        const { task, onToggle } = this.props;
+
+        return (
+            <Checkbox
+                checked={task.completed}
+                onClick={() => onToggle(task.id)}
+            />
+        );
+    }
+
+    private getTaskItemMenu(arg0: any): React.ReactElement<any> {
+        const { task, onDelete } = this.props;
+
+        return (
+            <div>
+                <DeleteButton onClick={() => onDelete(task.id)} />
+            </div>
+        );
+    }
+
+    private handleKeyPress(event: React.KeyboardEvent<{}>) {
+        const { onPressEnter } = this.props;
+
+        if (event.keyCode === 13) {
+            onPressEnter();
+        }
+    }
+
+    private updateText(event: React.ChangeEvent<any>): void {
+        const { task, onUpdate } = this.props;
+        const text = event.target.value;
+        onUpdate(task.id, text);
+    }
+
 }
 
 

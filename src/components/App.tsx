@@ -7,26 +7,39 @@ import { ActionButton } from './ActionButton';
 import { TaskList } from '../models/TaskList';
 import { Task } from '../models/Task';
 
-interface AppProps { }
+interface AppProps {
+    selected?: TaskList;
+    onAddTask?: () => void;
+    onUpdateTask?: (taskId: number, text: string) => void;
+    onToggleTask?: (taskId: number) => void;
+    onDeleteTask?: (taskId: number) => void;
+}
 
 interface AppState { }
 
 class App extends React.Component<AppProps, AppState> {
 
     render(): React.ReactElement<any> | false {
-        const taskList = new TaskList('TODO', [
-            new Task(),
-            new Task(),
-            new Task(),
-            new Task()
-        ]);
+        const {
+            selected,
+            onAddTask,
+            onUpdateTask,
+            onToggleTask,
+            onDeleteTask
+        } = this.props;
 
         return (
             <section className="app">
-                <AppBar/>
+                <AppBar />
                 <Menu open={false} />
-                <TaskListView list={taskList} />
-                <ActionButton />
+                <TaskListView
+                    list={selected}
+                    onAddTask={onAddTask}
+                    onUpdateTask={onUpdateTask}
+                    onToggleTask={onToggleTask}
+                    onDeleteTask={onDeleteTask}
+                />
+                <ActionButton onClick={onAddTask} />
             </section>
         );
     }
@@ -34,4 +47,4 @@ class App extends React.Component<AppProps, AppState> {
 }
 
 
-export { App }
+export { App, AppProps }

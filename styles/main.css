@@ -27,6 +27,11 @@ html, body {
     width: 100%;
 }
 
+.completed input {
+    text-decoration: line-through;
+    color: #E0E0E0 !important;
+}
+
 .action-button {
     position: fixed;
     bottom: 40px;
