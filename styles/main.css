@@ -14,7 +14,7 @@ html, body {
     height: 100%;
 }
 
-.list-view {
+.task-list-view {
     box-sizing: border-box;
     max-width: 960px;
     min-width: 320px;
@@ -23,7 +23,7 @@ html, body {
     margin: 0 auto;
 }
 
-.list-view .container {
+.task-list-view .container {
     width: 100%;
 }
 
