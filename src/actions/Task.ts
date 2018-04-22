@@ -9,6 +9,7 @@ interface TaskAction {
     type: ActionType;
     taskListId?: string;
     tasks?: Task[];
+    task?: Task;
     taskId?: string;
     title?: string;
 }
@@ -16,7 +17,7 @@ interface TaskAction {
 class TaskActions {
 
     static getTasks(taskListId: string): ThunkAction<void, AppState, any> {
-        return (dispatch: Dispatch<AppState>, getState: () => AppState) => {
+        return (dispatch: Dispatch<AppState>) => {
             const action = this.requestTasks();
             dispatch(action);
 
@@ -32,6 +33,22 @@ class TaskActions {
         };
     }
 
+    static createTask(taskListId: string): ThunkAction<void, AppState, void> {
+        return (dispatch: Dispatch<AppState>) => {
+            const action = this.requestCreateTask();
+            dispatch(action);
+
+            const dispatchTask = (task: Task) => {
+                const action = this.receiveCreateTask(task);
+                dispatch(action);
+            };
+
+            ApiClient
+                .getTasks(taskListId)
+                .then(dispatchTask);
+        };
+    }
+
     private static requestTasks(): TaskAction {
         return { type: ActionType.RequestTasks };
     }
@@ -40,8 +57,12 @@ class TaskActions {
         return { type: ActionType.ReceiveTasks, tasks };
     }
 
-    static createTask(): TaskAction {
-        return { type: ActionType.CreateTask };
+    private static requestCreateTask(): TaskAction {
+        return { type: ActionType.RequestCreateTask };
+    }
+
+    private static receiveCreateTask(task: Task): TaskAction {
+        return { type: ActionType.ReceiveCreateTask, task };
     }
 
     static deleteTask(taskId: string): TaskAction {

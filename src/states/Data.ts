@@ -1,11 +1,7 @@
 class DataState<T> {
-    data: T[];
+    data: T[] = new Array<T>();
     isFetching = false;
-
-    constructor() {
-        this.data = new Array<T>();
-        this.isFetching = false;
-    }
+    isCreating = false;
 }
 
 export { DataState }

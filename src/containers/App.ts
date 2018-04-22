@@ -28,8 +28,8 @@ function mapDispatchToProps(dispatch: Dispatch<any>): AppProps {
             const action = TaskActions.getTasks(taskListId);
             dispatch(action);
         },
-        onAddTask(): void {
-            const action = TaskActions.createTask();
+        onAddTask(taskListId: string): void {
+            const action = TaskActions.createTask(taskListId);
             dispatch(action);
         }
     };

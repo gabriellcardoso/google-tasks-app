@@ -66,6 +66,10 @@ class ApiClient {
         return this.sendRequest(() => GoogleApi.client.tasks.tasks.list({ tasklist: taskListId }));
     }
 
+    createTask(taskListId: string): Promise<any> {
+        return this.sendRequest(() => GoogleApi.client.tasks.tasks.insert({ tasklist: taskListId }));
+    }
+
 }
 
 export default new ApiClient();

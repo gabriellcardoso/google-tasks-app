@@ -13,7 +13,7 @@ interface AppProps {
     taskLists?: TaskList[];
     onStart?: () => void;
     onSelectList?: (taskListId: string) => void;
-    onAddTask?: () => void;
+    onAddTask?: (taskListId: string) => void;
 }
 
 interface AppState {
@@ -32,7 +32,7 @@ class App extends React.Component<AppProps, AppState> {
             taskLists,
             isLoading
         } = nextProps;
-        
+
         const isNotLoading = isLoading === false;
         const hasTaskLists = taskLists.length;
         const haventSelectedList = this.state.taskListId === null;
@@ -78,18 +78,16 @@ class App extends React.Component<AppProps, AppState> {
                     onCloseMenu={() => this.toggleMenu()}
                     onSelectList={taskListId => this.selectList(taskListId)}
                 />
-                <TaskListViewContainer id={taskListId} />
-                <ActionButton onClick={onAddTask} />
+                <TaskListViewContainer taskListId={taskListId} />
+                <ActionButton onClick={() => this.addTask()} />
             </section>
         );
     }
 
     private start(): void {
-        this.setState({
-            openMenu: false,
-            taskListId: null
-        });
-        this.props.onStart();
+        const { onStart } = this.props;
+        this.setState({ openMenu: false, taskListId: null });
+        onStart();
     }
 
     private toggleMenu(): void {
@@ -100,6 +98,12 @@ class App extends React.Component<AppProps, AppState> {
         const { onSelectList } = this.props;
         this.setState({ taskListId });
         onSelectList(taskListId);
+    }
+
+    private addTask(): void {
+        const { onAddTask } = this.props;
+        const { taskListId } = this.state;
+        onAddTask(taskListId);
     }
 
 }

@@ -11,8 +11,10 @@ class TaskReducer {
                 return TaskReducer.setAsFetching(prevState);
             case ActionType.ReceiveTasks:
                 return TaskReducer.setData(prevState, action);
-            case ActionType.CreateTask:
-                return TaskReducer.addTask(prevState);
+            case ActionType.RequestCreateTask:
+                return TaskReducer.setAsCreating(prevState);
+            case ActionType.ReceiveCreateTask:
+                return TaskReducer.addTask(prevState, action);
             case ActionType.DeleteTask:
                 return TaskReducer.deleteTask(prevState, action);
             case ActionType.UpdateTask:
@@ -39,10 +41,18 @@ class TaskReducer {
         };
     }
 
-    private static addTask(prevState: DataState<Task>): DataState<Task> {
+    private static setAsCreating(prevState: DataState<Task>): DataState<Task> {
         return {
             ...prevState,
-            data: [...prevState.data, {} as Task]
+            isCreating: true
+        };
+    }
+
+    private static addTask(prevState: DataState<Task>, action: TaskAction): DataState<Task> {
+        return {
+            ...prevState,
+            data: [...prevState.data, action.task],
+            isCreating: false
         };
     }
 
@@ -56,11 +66,11 @@ class TaskReducer {
     }
 
     private static updateTask(prevState: DataState<Task>, action: TaskAction): DataState<Task> {
-        const updateTaskText = (task: Task) => task.id === action.taskId ?
+        const updateTitle = (task: Task) => task.id === action.taskId ?
             { ...task, text: action.title } :
             task;
 
-        const tasks = prevState.data.map(updateTaskText);
+        const tasks = prevState.data.map(updateTitle);
 
         return {
             ...prevState,
@@ -72,7 +82,7 @@ class TaskReducer {
         const toggleTask = (task: Task) => task.id === action.taskId ?
             {
                 ...task,
-                status: task.status === 'needAction' ? 'completed': 'needAction'
+                status: task.status === 'needsAction' ? 'completed': 'needsAction'
             } :
             task;
 

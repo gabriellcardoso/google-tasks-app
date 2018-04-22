@@ -5,25 +5,28 @@ import { AppState } from '../states/App';
 import { TaskActions } from '../actions/Task';
 
 interface TaskListViewContainerProps {
-    id: string;
+    taskListId: string;
 }
 
 function mapStateToProps(appState: AppState, ownProps: TaskListViewContainerProps): TaskListViewProps {
+    const { taskListId } = ownProps;
     const isLoading = appState.tasks.isFetching;
     const tasks = appState.tasks.data;
-    const list = appState.taskLists.data.find(taskList => taskList.id === ownProps.id);
+    const list = appState.taskLists.data.find(taskList => taskList.id === taskListId);
 
     return {
-        isLoading, 
+        isLoading,
         list,
         tasks
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<AppState>): TaskListViewProps {
+function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: TaskListViewContainerProps): TaskListViewProps {
+    const { taskListId } = ownProps;
+
     return {
         onAddTask(): void {
-            const action = TaskActions.createTask();
+            const action = TaskActions.createTask(taskListId);
             dispatch(action);
         },
         onUpdateTask(taskId: string, title: string): void {
