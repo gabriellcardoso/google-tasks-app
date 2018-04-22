@@ -61,6 +61,7 @@ class TaskListView extends React.Component<TaskListViewProps, ListViewState> {
 
     private toTaskItem(task: Task, index: number): React.ReactNode {
         const {
+            tasks,
             onAddTask,
             onUpdateTask,
             onToggleTask,
@@ -71,7 +72,7 @@ class TaskListView extends React.Component<TaskListViewProps, ListViewState> {
             <TaskItem
                 key={task.id}
                 task={task}
-                onPressEnter={() => onAddTask(this.props.tasks[index - 1].id)}
+                onPressEnter={() => onAddTask(task.id)}
                 onUpdate={onUpdateTask}
                 onToggle={onToggleTask}
                 onDelete={onDeleteTask}

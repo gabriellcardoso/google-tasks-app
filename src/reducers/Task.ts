@@ -66,9 +66,10 @@ class TaskReducer {
     }
 
     private static addTask(prevState: DataState<Task>, action: TaskAction): DataState<Task> {
+        const tasks = [...prevState.data, action.task].sort((a, b) => a.position.localeCompare(b.position));
         return {
             ...prevState,
-            data: [...prevState.data, action.task],
+            data: tasks,
             isCreating: false
         };
     }
