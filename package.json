@@ -1,13 +1,13 @@
 {
   "name": "google-tasks-app",
   "version": "0.1.0",
-  "description": "A Google tasks web application",
+  "description": "This application is a Material Design basic version of the Google Tasks.",
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack",
     "dev": "./node_modules/.bin/webpack-dev-server",
     "dev-test": "npm test -- --watchAll",
-    "start": "google-chrome index.html",
+    "start": "./node_modules/.bin/http-server -a localhost -p 8080",
     "test": "./node_modules/.bin/jest"
   },
   "repository": {
@@ -34,6 +34,7 @@
     "@types/react-router-dom": "^4.2.6",
     "@types/redux": "^3.6.0",
     "es6-shim": "^0.35.3",
+    "http-server": "^0.11.1",
     "material-ui": "^0.20.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
