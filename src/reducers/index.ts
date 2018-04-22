@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { TaskListReducer } from './TaskListReducer';
-import { TaskReducer } from './TaskReducer';
+import { TaskListReducer } from './TaskList';
+import { TaskReducer } from './Task';
 
 const reducers = combineReducers({
     taskLists: TaskListReducer.reduce,

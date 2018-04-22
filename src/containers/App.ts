@@ -4,8 +4,8 @@ import {
 } from "react-redux";
 
 import { App, AppProps } from "../components/App";
-import { TaskListActions } from "../actions/TaskListActions";
-import { TaskActions } from "../actions/TaskActions";
+import { TaskListActions } from "../actions/TaskList";
+import { TaskActions } from "../actions/Task";
 import { AppState } from "../states/App";
 import ApiClient from '../utils/ApiClient';
 

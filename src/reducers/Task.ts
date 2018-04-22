@@ -1,5 +1,5 @@
 import { ActionType } from "../actions/ActionType";
-import { TaskAction } from "../actions/TaskActions";
+import { TaskAction } from "../actions/Task";
 import { TaskList } from "../models/TaskList";
 import { Task } from "../models/Task";
 
