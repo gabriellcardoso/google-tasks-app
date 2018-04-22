@@ -4,17 +4,28 @@ import {
 } from "react-redux";
 
 import { App, AppProps } from "../components/App";
+import { TaskListActions } from "../actions/TaskListActions";
 import { TaskActions } from "../actions/TaskActions";
 import { AppState } from "../states/App";
+import ApiClient from '../utils/ApiClient';
 
 function mapStateToProps(state: AppState): AppProps {
     return {
+        taskLists: state.taskLists,
         selected: state.selected
     };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<AppProps>): AppProps {
     return {
+        onStart(): void {
+            ApiClient
+                .getTasksLists()
+                .then(result => {
+                    const action = TaskListActions.list(result.items);
+                    dispatch(action);
+                });
+        },
         onAddTask(): void {
             const action = TaskActions.createTask();
             dispatch(action);

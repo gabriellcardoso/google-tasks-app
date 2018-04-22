@@ -2,30 +2,50 @@ import * as React from 'react';
 
 import {
     Drawer,
-    FontIcon,
     Subheader,
     Divider
 } from 'material-ui';
 
 import { MenuItem } from './MenuItem';
 import { AddIcon } from './AddIcon';
+import { TaskList } from '../models/TaskList';
 
-interface DrawerProps {
+interface MenuProps {
+    taskLists: TaskList[];
     open: boolean;
+    onSelectList?: (taskListId: string) => void;
 }
 
-const Menu = (props: DrawerProps) => (
-    <Drawer open={props.open}>
-        <Subheader>Lists</Subheader>
-        <Divider />
-        <MenuItem>TODO List</MenuItem>
-        <MenuItem>Other List</MenuItem>
-        <Divider />
-        <MenuItem leftIcon={<AddIcon />}>
-            New List
-        </MenuItem>
-        <Divider />
-    </Drawer>
-);
+interface MenuState { }
+
+class Menu extends React.Component<MenuProps, MenuState> {
+
+    render(): React.ReactElement<any> | false {
+        const {
+            open,
+            taskLists
+        } = this.props;
+
+        const taskListItem = taskLists.map(taskList => this.toMenuItem(taskList));
+
+        return (
+            <Drawer
+                open={open}
+                docked={false}
+            >
+                <Subheader>Lists</Subheader>
+                <Divider />
+                {taskListItem}
+            </Drawer>
+        );
+    }
+
+    private toMenuItem(taskList: TaskList): React.ReactNode {
+        return (
+            <MenuItem key={taskList.id}>{taskList.title}</MenuItem>
+        );
+    }
+
+}
 
 export { Menu }

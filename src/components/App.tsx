@@ -8,7 +8,9 @@ import { TaskList } from '../models/TaskList';
 import { Task } from '../models/Task';
 
 interface AppProps {
+    taskLists?: TaskList[];
     selected?: TaskList;
+    onStart?: () => void;
     onAddTask?: () => void;
     onUpdateTask?: (taskId: number, text: string) => void;
     onToggleTask?: (taskId: number) => void;
@@ -19,8 +21,13 @@ interface AppState { }
 
 class App extends React.Component<AppProps, AppState> {
 
+    componentWillMount(): void {
+        this.props.onStart();
+    }
+
     render(): React.ReactElement<any> | false {
         const {
+            taskLists,
             selected,
             onAddTask,
             onUpdateTask,
@@ -31,7 +38,10 @@ class App extends React.Component<AppProps, AppState> {
         return (
             <section className="app">
                 <AppBar />
-                <Menu open={false} />
+                <Menu
+                    taskLists={taskLists}
+                    open={true}
+                />
                 <TaskListView
                     list={selected}
                     onAddTask={onAddTask}

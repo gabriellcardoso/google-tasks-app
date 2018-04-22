@@ -1,4 +1,5 @@
 enum ActionType {
+    ListTaskList = 'ListTaskList',
     CreateTask = 'CreateTask',
     UpdateTask = 'UpdateTask',
     DeleteTask = 'DeleteTask',

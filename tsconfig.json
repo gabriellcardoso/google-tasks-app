@@ -5,13 +5,6 @@
         "jsx": "react",
         "sourceMap": true,
         "noImplicitAny": true,
-        "baseUrl": "./src",
-        "paths": {
-            "actions": ["actions/"],
-            "components": ["components/"],
-            "containers": ["containers/"],
-            "reducers": ["reducers/"],
-        },
         "outDir": "dist/",
     },
     "include": [

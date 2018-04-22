@@ -2,6 +2,7 @@ import { Task } from "./Task";
 
 class TaskList {
 
+    id: string;
     title: string;
     tasks: Task[];
 

@@ -1,7 +1,7 @@
 import { ActionType } from "../actions/ActionType";
+import { TaskAction } from "../actions/TaskActions";
 import { TaskList } from "../models/TaskList";
 import { Task } from "../models/Task";
-import { TaskAction } from "../actions/TaskActions";
 
 class TaskReducer {
 

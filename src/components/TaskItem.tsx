@@ -6,7 +6,7 @@ import {
     TextField
 } from 'material-ui';
 
-import { Task } from 'models/Task';
+import { Task } from '../models/Task';
 import { DeleteButton } from './DeleteButton';
 
 const style: React.CSSProperties = {
@@ -39,7 +39,7 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
         } = this.props;
 
         const checkbox = this.getTaskCheckbox();
-        const taskItemMenu = this.getTaskItemMenu(task);
+        const taskItemMenu = this.getTaskItemMenu();
         const fieldClassName = task.completed ? 'completed' : null;
 
         return (
@@ -53,6 +53,7 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
                     value={task.text}
                     fullWidth={true}
                     underlineShow={false}
+                    autoFocus={true}
                     onChange={event => this.updateText(event)}
                     onKeyPress={event => this.handleKeyPress(event)}
                 />
@@ -71,7 +72,7 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
         );
     }
 
-    private getTaskItemMenu(arg0: any): React.ReactElement<any> {
+    private getTaskItemMenu(): React.ReactElement<any> {
         const { task, onDelete } = this.props;
 
         return (
@@ -84,7 +85,7 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
     private handleKeyPress(event: React.KeyboardEvent<{}>) {
         const { onPressEnter } = this.props;
 
-        if (event.keyCode === 13) {
+        if (event.key === 'Enter') {
             onPressEnter();
         }
     }

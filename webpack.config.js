@@ -1,8 +1,20 @@
+const rules = {
+    typescript: {
+        test: /\.tsx?$/,
+        loader: 'awesome-typescript-loader'
+    },
+    sourceMap: {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader'
+    }
+};
+
 module.exports = {
     mode: 'development',
-    
+
     entry: "./src/index.tsx",
-    
+
     output: {
         path: __dirname + "/dist",
         publicPath: "dist",
@@ -10,21 +22,18 @@ module.exports = {
     },
 
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".json"]
+        extensions: [".ts", ".tsx", ".js", ".json"],
     },
 
     module: {
         rules: [
-            {
-                test: /\.tsx?$/,
-                loader: "awesome-typescript-loader"
-            },
-            {
-                enforce: "pre",
-                test: /\.js$/,
-                loader: "source-map-loader"
-            }
+            rules.typescript,
+            rules.sourceMap
         ]
+    },
+
+    externals: {
+        gapi: "gapi"
     },
 
     devtool: "source-map",
