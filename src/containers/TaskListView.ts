@@ -41,7 +41,7 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: TaskListView
             dispatch(action);
         },
         onDeleteTask(taskId: string): void {
-            const action = TaskActions.deleteTask(taskId);
+            const action = TaskActions.deleteTask(taskListId, taskId);
             dispatch(action);
         }
     };

@@ -33,7 +33,7 @@ class TaskActions {
         };
     }
 
-    static createTask(taskListId: string, prevTaskId: string, title?: string): ThunkAction<void, AppState, void> {
+    static createTask(taskListId: string, previousTaskId?: string, title?: string): ThunkAction<void, AppState, void> {
         return (dispatch: Dispatch<AppState>) => {
             const action = this.requestCreateTask();
             dispatch(action);
@@ -44,7 +44,23 @@ class TaskActions {
             };
 
             ApiClient
-                .createTask(taskListId, prevTaskId, title)
+                .createTask(taskListId, previousTaskId, title)
+                .then(dispatchTask);
+        };
+    }
+
+    static deleteTask(taskListId: string, taskId: string): ThunkAction<void, AppState, void> {
+        return (dispatch: Dispatch<AppState>) => {
+            const action = this.requestDeleteTask();
+            dispatch(action);
+
+            const dispatchTask = () => {
+                const action = this.receiveDeleteTask(taskId);
+                dispatch(action);
+            };
+
+            ApiClient
+                .deleteTask(taskListId, taskId)
                 .then(dispatchTask);
         };
     }
@@ -78,7 +94,15 @@ class TaskActions {
     }
 
     private static receiveCreateTask(task: Task): TaskAction {
-        return { type: ActionType.ReceiveCreateTask, task };
+        return { type: ActionType.CreateTask, task };
+    }
+
+    private static requestDeleteTask(): TaskAction {
+        return { type: ActionType.RequestDeleteTask };
+    }
+
+    private static receiveDeleteTask(taskId: string): TaskAction {
+        return { type: ActionType.ReceiveDeleteTask, taskId };
     }
 
     private static requestUpdateTask(): TaskAction {
@@ -86,15 +110,11 @@ class TaskActions {
     }
 
     private static receiveUpdateTask(task: Task): TaskAction {
-        return { type: ActionType.ReceiveUpdateTask, task };
+        return { type: ActionType.UpdateTask, task };
     }
 
     static toggleTask(taskId: string): TaskAction {
         return { type: ActionType.ToggleTask, taskId };
-    }
-
-    static deleteTask(taskId: string): TaskAction {
-        return { type: ActionType.DeleteTask, taskId };
     }
 
 }

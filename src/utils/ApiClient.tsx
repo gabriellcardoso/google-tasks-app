@@ -82,6 +82,15 @@ class ApiClient {
         );
     }
 
+    deleteTask(taskListId: string, taskId: string): Promise<any> {
+        return this.sendRequest(
+            () => GoogleApi.client.tasks.tasks.delete({
+                tasklist: taskListId,
+                task: taskId
+            })
+        );
+    }
+
     updateTask(taskListId: string, taskId: string, title: string) {
         return this.sendRequest(
             () => GoogleApi.client.tasks.tasks.patch({

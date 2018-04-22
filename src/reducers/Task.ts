@@ -11,15 +11,13 @@ class TaskReducer {
                 return TaskReducer.setAsFetching(prevState);
             case ActionType.ReceiveTasks:
                 return TaskReducer.setData(prevState, action);
-            case ActionType.RequestCreateTask:
-                return TaskReducer.setAsCreating(prevState);
-            case ActionType.ReceiveCreateTask:
+            case ActionType.CreateTask:
                 return TaskReducer.addTask(prevState, action);
-            case ActionType.RequestUpdateTask:
-                return TaskReducer.setAsUpdating(prevState);
-            case ActionType.ReceiveUpdateTask:
+            case ActionType.UpdateTask:
                 return TaskReducer.updateTask(prevState, action);
-            case ActionType.DeleteTask:
+            case ActionType.RequestDeleteTask:
+                return TaskReducer.setAsDeleting(prevState);
+            case ActionType.ReceiveDeleteTask:
                 return TaskReducer.deleteTask(prevState, action);
             case ActionType.ToggleTask:
                 return TaskReducer.toggleTask(prevState, action);
@@ -58,12 +56,20 @@ class TaskReducer {
         };
     }
 
+    private static setAsDeleting(prevState: DataState<Task>): DataState<Task> {
+        return {
+            ...prevState,
+            isDeleting: true
+        };
+    }
+
     private static deleteTask(prevState: DataState<Task>, action: TaskAction): DataState<Task> {
         const tasks = prevState.data.filter(task => task.id !== action.taskId);
 
         return {
             ...prevState,
-            data: tasks.length ? tasks : [{} as Task]
+            data: tasks.length ? tasks : [{} as Task],
+            isDeleting: false
         };
     }
 

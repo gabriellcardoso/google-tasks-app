@@ -3,6 +3,7 @@ class DataState<T> {
     isFetching = false;
     isCreating = false;
     isUpdating = false;
+    isDeleting = false;
 }
 
 export { DataState }

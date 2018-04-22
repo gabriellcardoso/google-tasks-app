@@ -4,10 +4,11 @@ enum ActionType {
     RequestTasks = 'RequestTasks',
     ReceiveTasks = 'ReceiveTasks',
     RequestCreateTask = 'RequestCreateTask',
-    ReceiveCreateTask = 'ReceiveCreateTask',
+    CreateTask = 'ReceiveCreateTask',
     RequestUpdateTask = 'RequestUpdateTask',
-    ReceiveUpdateTask = 'ReceiveUpdateTask',
-    DeleteTask = 'DeleteTask',
+    UpdateTask = 'ReceiveUpdateTask',
+    RequestDeleteTask = 'RequestDeleteTask',
+    ReceiveDeleteTask = 'ReceiveDeleteTask',
     ToggleTask = 'ToggleTask'
 }
 
