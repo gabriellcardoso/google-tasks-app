@@ -15,10 +15,12 @@ class TaskReducer {
                 return TaskReducer.setAsCreating(prevState);
             case ActionType.ReceiveCreateTask:
                 return TaskReducer.addTask(prevState, action);
+            case ActionType.RequestUpdateTask:
+                return TaskReducer.setAsUpdating(prevState);
+            case ActionType.ReceiveUpdateTask:
+                return TaskReducer.updateTask(prevState, action);
             case ActionType.DeleteTask:
                 return TaskReducer.deleteTask(prevState, action);
-            case ActionType.UpdateTask:
-                return TaskReducer.updateTask(prevState, action);
             case ActionType.ToggleTask:
                 return TaskReducer.toggleTask(prevState, action);
             default:
@@ -65,16 +67,24 @@ class TaskReducer {
         };
     }
 
+    private static setAsUpdating(prevState: DataState<Task>): DataState<Task> {
+        return {
+            ...prevState,
+            isUpdating: true
+        };
+    }
+
     private static updateTask(prevState: DataState<Task>, action: TaskAction): DataState<Task> {
-        const updateTitle = (task: Task) => task.id === action.taskId ?
-            { ...task, text: action.title } :
+        const updateTask = (task: Task) => task.id === action.taskId ?
+            action.task :
             task;
 
-        const tasks = prevState.data.map(updateTitle);
+        const tasks = prevState.data.map(updateTask);
 
         return {
             ...prevState,
-            data: tasks
+            data: tasks,
+            isUpdating: false
         };
     }
 
@@ -82,7 +92,7 @@ class TaskReducer {
         const toggleTask = (task: Task) => task.id === action.taskId ?
             {
                 ...task,
-                status: task.status === 'needsAction' ? 'completed': 'needsAction'
+                status: task.status === 'needsAction' ? 'completed' : 'needsAction'
             } :
             task;
 

@@ -30,7 +30,10 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: TaskListView
             dispatch(action);
         },
         onUpdateTask(taskId: string, title: string): void {
-            const action = TaskActions.updateTask(taskId, title);
+            const action = taskId ?
+                TaskActions.updateTask(taskListId, taskId, title) :
+                TaskActions.createTask(taskListId, title);
+
             dispatch(action);
         },
         onToggleTask(taskId: string): void {

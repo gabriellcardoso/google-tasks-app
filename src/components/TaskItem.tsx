@@ -23,12 +23,14 @@ interface TaskItemProps {
     onDelete: (taskId: string) => void;
 }
 
-interface TaskItemState { }
+interface TaskItemState {
+    title: string;
+}
 
 class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
 
     componentWillMount(): void {
-        this.setState({ text: this.props.task.title });
+        this.setState({ title: this.props.task.title });
     }
 
     render(): React.ReactElement<any> | false {
@@ -37,6 +39,8 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
             onToggle,
             onDelete
         } = this.props;
+
+        const { title } = this.state;
 
         const checkbox = this.getTaskCheckbox();
         const taskItemMenu = this.getTaskItemMenu();
@@ -50,11 +54,12 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
             >
                 <TextField
                     className={fieldClassName}
-                    value={task.title}
+                    value={title}
                     fullWidth={true}
                     underlineShow={false}
                     autoFocus={true}
                     onChange={event => this.updateText(event)}
+                    onBlur={event => this.updateTask()}
                     onKeyPress={event => this.handleKeyPress(event)}
                 />
             </ListItem>
@@ -91,8 +96,13 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
     }
 
     private updateText(event: React.ChangeEvent<any>): void {
-        const { task, onUpdate } = this.props;
         const title = event.target.value;
+        this.setState({ title });
+    }
+
+    private updateTask(): void {
+        const { task, onUpdate } = this.props;
+        const { title } = this.state;
         onUpdate(task.id, title);
     }
 

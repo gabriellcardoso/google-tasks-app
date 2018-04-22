@@ -33,7 +33,7 @@ class TaskActions {
         };
     }
 
-    static createTask(taskListId: string): ThunkAction<void, AppState, void> {
+    static createTask(taskListId: string, prevTaskId: string, title?: string): ThunkAction<void, AppState, void> {
         return (dispatch: Dispatch<AppState>) => {
             const action = this.requestCreateTask();
             dispatch(action);
@@ -44,7 +44,23 @@ class TaskActions {
             };
 
             ApiClient
-                .getTasks(taskListId)
+                .createTask(taskListId, prevTaskId, title)
+                .then(dispatchTask);
+        };
+    }
+
+    static updateTask(taskListId: string, taskId: string, title: string): ThunkAction<void, AppState, void> {
+        return (dispatch: Dispatch<AppState>) => {
+            const action = this.requestUpdateTask();
+            dispatch(action);
+
+            const dispatchTask = (task: Task) => {
+                const action = this.receiveUpdateTask(task);
+                dispatch(action);
+            };
+
+            ApiClient
+                .updateTask(taskListId, taskId, title)
                 .then(dispatchTask);
         };
     }
@@ -65,16 +81,20 @@ class TaskActions {
         return { type: ActionType.ReceiveCreateTask, task };
     }
 
-    static deleteTask(taskId: string): TaskAction {
-        return { type: ActionType.DeleteTask, taskId };
+    private static requestUpdateTask(): TaskAction {
+        return { type: ActionType.RequestUpdateTask };
     }
 
-    static updateTask(taskId: string, title: string): TaskAction {
-        return { type: ActionType.UpdateTask, taskId, title };
+    private static receiveUpdateTask(task: Task): TaskAction {
+        return { type: ActionType.ReceiveUpdateTask, task };
     }
 
     static toggleTask(taskId: string): TaskAction {
         return { type: ActionType.ToggleTask, taskId };
+    }
+
+    static deleteTask(taskId: string): TaskAction {
+        return { type: ActionType.DeleteTask, taskId };
     }
 
 }

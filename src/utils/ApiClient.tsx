@@ -59,15 +59,37 @@ class ApiClient {
     }
 
     getTasksLists(): Promise<any> {
-        return this.sendRequest(() => GoogleApi.client.tasks.tasklists.list());
+        return this.sendRequest(
+            () => GoogleApi.client.tasks.tasklists.list()
+        );
     }
 
     getTasks(taskListId: string): Promise<any> {
-        return this.sendRequest(() => GoogleApi.client.tasks.tasks.list({ tasklist: taskListId }));
+        return this.sendRequest(
+            () => GoogleApi.client.tasks.tasks.list({
+                tasklist: taskListId
+            })
+        );
     }
 
-    createTask(taskListId: string): Promise<any> {
-        return this.sendRequest(() => GoogleApi.client.tasks.tasks.insert({ tasklist: taskListId }));
+    createTask(taskListId: string, previousTaskId?: string, title?: string): Promise<any> {
+        return this.sendRequest(
+            () => GoogleApi.client.tasks.tasks.insert({
+                tasklist: taskListId,
+                previous: previousTaskId,
+                title
+            })
+        );
+    }
+
+    updateTask(taskListId: string, taskId: string, title: string) {
+        return this.sendRequest(
+            () => GoogleApi.client.tasks.tasks.patch({
+                tasklist: taskListId,
+                task: taskId,
+                title
+            })
+        );
     }
 
 }

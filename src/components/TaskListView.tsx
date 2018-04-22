@@ -21,7 +21,9 @@ interface TaskListViewProps {
     onDeleteTask?: (taskId: string) => void;
 }
 
-interface ListViewState { }
+interface ListViewState {
+    text: string
+}
 
 class TaskListView extends React.Component<TaskListViewProps, ListViewState> {
 
