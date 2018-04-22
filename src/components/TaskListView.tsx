@@ -6,16 +6,19 @@ import {
     Divider,
 } from 'material-ui';
 
+import { CircularProgress } from './CircularProgress';
 import { TaskItem } from './TaskItem';
 import { Task } from '../models/Task';
 import { TaskList } from '../models/TaskList';
 
 interface TaskListViewProps {
-    list: TaskList;
-    onAddTask: () => void;
-    onUpdateTask: (taskId: number, text: string) => void;
-    onToggleTask: (taskId: number) => void;
-    onDeleteTask: (taskId: number) => void;
+    isLoading?: boolean;
+    list?: TaskList;
+    tasks?: Task[];
+    onAddTask?: () => void;
+    onUpdateTask?: (taskId: string, title: string) => void;
+    onToggleTask?: (taskId: string) => void;
+    onDeleteTask?: (taskId: string) => void;
 }
 
 interface ListViewState { }
@@ -23,9 +26,25 @@ interface ListViewState { }
 class TaskListView extends React.Component<TaskListViewProps, ListViewState> {
 
     render(): React.ReactElement<any> | false {
-        const { list } = this.props;
+        const {
+            isLoading,
+            list,
+            tasks
+        } = this.props;
 
-        const taskItems = list.tasks.map((task, index) => this.toTaskItem(task, index));
+        if (isLoading) {
+            return (
+                <section className="task-list-view">
+                    <CircularProgress />
+                </section>
+            );
+        }
+
+        if (!list || !tasks) {
+            return false;
+        }
+
+        const taskItems = tasks.map((task, index) => this.toTaskItem(task, index));
 
         return (
             <section className="task-list-view">
@@ -60,4 +79,4 @@ class TaskListView extends React.Component<TaskListViewProps, ListViewState> {
 
 }
 
-export { TaskListView }
+export { TaskListView, TaskListViewProps }

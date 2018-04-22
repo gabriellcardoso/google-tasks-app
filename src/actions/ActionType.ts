@@ -1,9 +1,12 @@
 enum ActionType {
-    ListTaskList = 'ListTaskList',
+    RequestTaskLists = 'RequestTaskLists',
+    ReceiveTaskLists = 'ReceiveTaskLists',
+    RequestTasks = 'RequestTasks',
+    ReceiveTasks = 'ReceiveTasks',
     CreateTask = 'CreateTask',
     UpdateTask = 'UpdateTask',
     DeleteTask = 'DeleteTask',
-    ToggleTask = 'CompleteTask'
+    ToggleTask = 'ToggleTask'
 }
 
 export { ActionType }

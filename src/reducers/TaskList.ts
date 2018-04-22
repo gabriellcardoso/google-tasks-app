@@ -1,15 +1,25 @@
-import { TaskList } from "../models/TaskList";
-import { TaskListAction } from "../actions/TaskList";
 import { ActionType } from "../actions/ActionType";
+import { TaskListAction } from "../actions/TaskList";
+import { DataState } from "../states/Data";
+import { TaskList } from "../models/TaskList";
 
 class TaskListReducer {
 
-    static reduce(taskLists: TaskList[] = [], action: TaskListAction) {
+    static reduce(prevState = new DataState<TaskList>(), action: TaskListAction) {
         switch (action.type) {
-            case ActionType.ListTaskList:
-                return action.taskLists;
+            case ActionType.RequestTaskLists:
+                return {
+                    ...prevState,
+                    isFetching: true
+                };
+            case ActionType.ReceiveTaskLists:
+                return {
+                    ...prevState,
+                    isFetching: false,
+                    data: action.taskLists
+                };
             default:
-                return taskLists;
+                return prevState;
         }
     }
 

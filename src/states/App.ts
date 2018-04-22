@@ -1,8 +1,10 @@
+import { DataState } from "./Data";
 import { TaskList } from "../models/TaskList";
+import { Task } from "../models/Task";
 
 class AppState {
-    taskLists: TaskList[];
-    selected: TaskList;
+    taskLists: DataState<TaskList>;
+    tasks: DataState<Task>;
 }
 
 export { AppState }

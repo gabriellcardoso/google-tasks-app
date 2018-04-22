@@ -18,9 +18,9 @@ const style: React.CSSProperties = {
 interface TaskItemProps {
     task: Task;
     onPressEnter: () => void;
-    onUpdate: (taskId: number, text: string) => void;
-    onToggle: (taskId: number) => void;
-    onDelete: (taskId: number) => void;
+    onUpdate: (taskId: string, title: string) => void;
+    onToggle: (taskId: string) => void;
+    onDelete: (taskId: string) => void;
 }
 
 interface TaskItemState { }
@@ -28,7 +28,7 @@ interface TaskItemState { }
 class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
 
     componentWillMount(): void {
-        this.setState({ text: this.props.task.text });
+        this.setState({ text: this.props.task.title });
     }
 
     render(): React.ReactElement<any> | false {
@@ -40,7 +40,7 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
 
         const checkbox = this.getTaskCheckbox();
         const taskItemMenu = this.getTaskItemMenu();
-        const fieldClassName = task.completed ? 'completed' : null;
+        const fieldClassName = task.status === 'completed' ? 'completed' : null;
 
         return (
             <ListItem
@@ -50,7 +50,7 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
             >
                 <TextField
                     className={fieldClassName}
-                    value={task.text}
+                    value={task.title}
                     fullWidth={true}
                     underlineShow={false}
                     autoFocus={true}
@@ -66,7 +66,7 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
 
         return (
             <Checkbox
-                checked={task.completed}
+                checked={task.status === 'completed'}
                 onClick={() => onToggle(task.id)}
             />
         );
@@ -92,8 +92,8 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
 
     private updateText(event: React.ChangeEvent<any>): void {
         const { task, onUpdate } = this.props;
-        const text = event.target.value;
-        onUpdate(task.id, text);
+        const title = event.target.value;
+        onUpdate(task.id, title);
     }
 
 }

@@ -4,7 +4,7 @@ import { TaskReducer } from './Task';
 
 const reducers = combineReducers({
     taskLists: TaskListReducer.reduce,
-    selected: TaskReducer.reduce 
+    tasks: TaskReducer.reduce 
 });
 
 export { reducers }

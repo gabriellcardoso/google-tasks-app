@@ -1,45 +1,35 @@
-import {
-    connect,
-    Dispatch
-} from "react-redux";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
 
 import { App, AppProps } from "../components/App";
 import { TaskListActions } from "../actions/TaskList";
 import { TaskActions } from "../actions/Task";
 import { AppState } from "../states/App";
 import ApiClient from '../utils/ApiClient';
+import { TaskList } from "../models/TaskList";
 
-function mapStateToProps(state: AppState): AppProps {
+function mapStateToProps(appState: AppState): AppProps {
+    const taskLists = appState.taskLists.data;
+    const isLoading = appState.taskLists.isFetching;
+
     return {
-        taskLists: state.taskLists,
-        selected: state.selected
+        isLoading,
+        taskLists
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<AppProps>): AppProps {
+function mapDispatchToProps(dispatch: Dispatch<any>): AppProps {
     return {
         onStart(): void {
-            ApiClient
-                .getTasksLists()
-                .then(result => {
-                    const action = TaskListActions.list(result.items);
-                    dispatch(action);
-                });
+            const action = TaskListActions.getTaskLists();
+            dispatch(action);
+        },
+        onSelectList(taskListId: string) : void {
+            const action = TaskActions.getTasks(taskListId);
+            dispatch(action);
         },
         onAddTask(): void {
             const action = TaskActions.createTask();
-            dispatch(action);
-        },
-        onUpdateTask(taskId: number, text: string): void {
-            const action = TaskActions.updateTask(taskId, text);
-            dispatch(action);
-        },
-        onToggleTask(taskId: number): void {
-            const action = TaskActions.toggleTask(taskId);
-            dispatch(action);
-        },
-        onDeleteTask(taskId: number): void {
-            const action = TaskActions.deleteTask(taskId);
             dispatch(action);
         }
     };
@@ -48,4 +38,4 @@ function mapDispatchToProps(dispatch: Dispatch<AppProps>): AppProps {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(App);
+)(App as any);
