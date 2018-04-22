@@ -11,9 +11,10 @@ import { Task } from '../models/Task';
 interface AppProps {
     isLoading?: boolean;
     taskLists?: TaskList[];
+    lastTaskId?: string;
     onStart?: () => void;
     onSelectList?: (taskListId: string) => void;
-    onAddTask?: (taskListId: string) => void;
+    onAddTask?: (taskListId: string, previousTaskId: string) => void;
 }
 
 interface AppState {
@@ -30,6 +31,7 @@ class App extends React.Component<AppProps, AppState> {
     componentWillReceiveProps(nextProps: AppProps): void {
         const {
             taskLists,
+            lastTaskId,
             isLoading
         } = nextProps;
 
@@ -101,9 +103,9 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     private addTask(): void {
-        const { onAddTask } = this.props;
+        const { lastTaskId, onAddTask } = this.props;
         const { taskListId } = this.state;
-        onAddTask(taskListId);
+        onAddTask(taskListId, lastTaskId);
     }
 
 }

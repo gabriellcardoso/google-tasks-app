@@ -5,11 +5,10 @@ import { GoogleApiConfig } from "../config";
 class ApiClient {
 
     private auth: any;
-    private isAuthorized: boolean;
-    private request: () => Promise<any>;
+    private isAuthorized: boolean = false;
+    private requests: Array<() => Promise<any>> = [];
 
     constructor() {
-        this.isAuthorized = false;
         GoogleApi.load('client', () => this.initializeClient());
     }
 
@@ -40,18 +39,20 @@ class ApiClient {
 
     private sendRequest(request: () => Promise<any>) {
         return new Promise((resolve, reject) => {
-            this.request = () => request()
-                .then((response: any) => resolve(response.result))
-                .catch((response: any) => reject(response));
+            this.requests.push(
+                () => request()
+                    .then((response: any) => resolve(response.result))
+                    .catch((response: any) => reject(response))
+            );
 
             this.tryToSendRequest();
         });
     }
 
     private tryToSendRequest(): void {
-        if (this.isAuthorized && this.request) {
-            this.request();
-            this.request = null;
+        if (this.isAuthorized && this.requests.length) {
+            this.requests.forEach(request => request());
+            this.requests = [];
         }
         else if (this.auth) {
             this.auth.signIn();
@@ -97,6 +98,21 @@ class ApiClient {
                 tasklist: taskListId,
                 task: taskId,
                 title
+            })
+        );
+    }
+
+    toggleTask(taskListId: string, taskId: string, status: string) {
+        const completed = status === 'completed' ?
+            new Date().toISOString() :
+            null;
+
+        return this.sendRequest(
+            () => GoogleApi.client.tasks.tasks.patch({
+                tasklist: taskListId,
+                task: taskId,
+                status: status,
+                completed: completed,
             })
         );
     }

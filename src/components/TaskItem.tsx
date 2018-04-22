@@ -19,7 +19,7 @@ interface TaskItemProps {
     task: Task;
     onPressEnter: () => void;
     onUpdate: (taskId: string, title: string) => void;
-    onToggle: (taskId: string) => void;
+    onToggle: (taskId: string, status: string) => void;
     onDelete: (taskId: string) => void;
 }
 
@@ -34,12 +34,7 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
     }
 
     render(): React.ReactElement<any> | false {
-        const {
-            task,
-            onToggle,
-            onDelete
-        } = this.props;
-
+        const { task } = this.props;
         const { title } = this.state;
 
         const checkbox = this.getTaskCheckbox();
@@ -67,24 +62,29 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
     }
 
     private getTaskCheckbox(): React.ReactElement<any> {
-        const { task, onToggle } = this.props;
+        const { task } = this.props;
 
         return (
             <Checkbox
                 checked={task.status === 'completed'}
-                onClick={() => onToggle(task.id)}
+                onClick={() => this.toggleStatus(task)}
             />
         );
     }
 
-    private getTaskItemMenu(): React.ReactElement<any> {
-        const { task, onDelete } = this.props;
+    private toggleStatus(task: Task): void {
+        const { onToggle } = this.props;
 
-        return (
-            <div>
-                <DeleteButton onClick={() => onDelete(task.id)} />
-            </div>
-        );
+        const status = task.status !== 'completed' ?
+            'completed' :
+            'needsAction';
+
+        onToggle(task.id, status);
+    }
+
+    private updateText(event: React.ChangeEvent<any>): void {
+        const title = event.target.value;
+        this.setState({ title });
     }
 
     private handleKeyPress(event: React.KeyboardEvent<{}>) {
@@ -95,15 +95,20 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
         }
     }
 
-    private updateText(event: React.ChangeEvent<any>): void {
-        const title = event.target.value;
-        this.setState({ title });
-    }
-
     private updateTask(): void {
         const { task, onUpdate } = this.props;
         const { title } = this.state;
         onUpdate(task.id, title);
+    }
+
+    private getTaskItemMenu(): React.ReactElement<any> {
+        const { task, onDelete } = this.props;
+
+        return (
+            <div>
+                <DeleteButton onClick={() => onDelete(task.id)} />
+            </div>
+        );
     }
 
 }

@@ -7,20 +7,37 @@ class TaskReducer {
 
     static reduce(prevState = new DataState<Task>(), action: TaskAction): DataState<Task> {
         switch (action.type) {
+
             case ActionType.RequestTasks:
                 return TaskReducer.setAsFetching(prevState);
+
             case ActionType.ReceiveTasks:
                 return TaskReducer.setData(prevState, action);
-            case ActionType.CreateTask:
+
+            case ActionType.RequestCreateTask:
+                return TaskReducer.setAsCreating(prevState);
+
+            case ActionType.ReceiveCreateTask:
                 return TaskReducer.addTask(prevState, action);
-            case ActionType.UpdateTask:
+
+            case ActionType.RequestUpdateTask:
+                return TaskReducer.setAsUpdating(prevState);
+
+            case ActionType.ReceiveUpdateTask:
                 return TaskReducer.updateTask(prevState, action);
+
+            case ActionType.RequestToggleTask:
+                return TaskReducer.setAsUpdating(prevState);
+
+            case ActionType.ReceiveToggleTask:
+                return TaskReducer.toggleTask(prevState, action);
+
             case ActionType.RequestDeleteTask:
                 return TaskReducer.setAsDeleting(prevState);
+
             case ActionType.ReceiveDeleteTask:
                 return TaskReducer.deleteTask(prevState, action);
-            case ActionType.ToggleTask:
-                return TaskReducer.toggleTask(prevState, action);
+
             default:
                 return prevState;
         }
@@ -68,7 +85,7 @@ class TaskReducer {
 
         return {
             ...prevState,
-            data: tasks.length ? tasks : [{} as Task],
+            data: tasks,
             isDeleting: false
         };
     }
@@ -81,7 +98,7 @@ class TaskReducer {
     }
 
     private static updateTask(prevState: DataState<Task>, action: TaskAction): DataState<Task> {
-        const updateTask = (task: Task) => task.id === action.taskId ?
+        const updateTask = (task: Task) => task.id === action.task.id ?
             action.task :
             task;
 
@@ -95,18 +112,16 @@ class TaskReducer {
     }
 
     private static toggleTask(prevState: DataState<Task>, action: TaskAction): DataState<Task> {
-        const toggleTask = (task: Task) => task.id === action.taskId ?
-            {
-                ...task,
-                status: task.status === 'needsAction' ? 'completed' : 'needsAction'
-            } :
+        const updateTask = (task: Task) => task.id === action.task.id ?
+            action.task :
             task;
 
-        const tasks = prevState.data.map(toggleTask);
+        const tasks = prevState.data.map(updateTask);
 
         return {
             ...prevState,
-            data: tasks
+            data: tasks,
+            isUpdating: false
         };
     }
 

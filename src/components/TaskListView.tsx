@@ -15,9 +15,9 @@ interface TaskListViewProps {
     isLoading?: boolean;
     list?: TaskList;
     tasks?: Task[];
-    onAddTask?: () => void;
+    onAddTask?: (previousTaskId: string) => void;
     onUpdateTask?: (taskId: string, title: string) => void;
-    onToggleTask?: (taskId: string) => void;
+    onToggleTask?: (taskId: string, status: string) => void;
     onDeleteTask?: (taskId: string) => void;
 }
 
@@ -71,7 +71,7 @@ class TaskListView extends React.Component<TaskListViewProps, ListViewState> {
             <TaskItem
                 key={task.id}
                 task={task}
-                onPressEnter={onAddTask}
+                onPressEnter={() => onAddTask(this.props.tasks[index - 1].id)}
                 onUpdate={onUpdateTask}
                 onToggle={onToggleTask}
                 onDelete={onDeleteTask}

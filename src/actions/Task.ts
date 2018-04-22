@@ -49,22 +49,6 @@ class TaskActions {
         };
     }
 
-    static deleteTask(taskListId: string, taskId: string): ThunkAction<void, AppState, void> {
-        return (dispatch: Dispatch<AppState>) => {
-            const action = this.requestDeleteTask();
-            dispatch(action);
-
-            const dispatchTask = () => {
-                const action = this.receiveDeleteTask(taskId);
-                dispatch(action);
-            };
-
-            ApiClient
-                .deleteTask(taskListId, taskId)
-                .then(dispatchTask);
-        };
-    }
-
     static updateTask(taskListId: string, taskId: string, title: string): ThunkAction<void, AppState, void> {
         return (dispatch: Dispatch<AppState>) => {
             const action = this.requestUpdateTask();
@@ -77,6 +61,38 @@ class TaskActions {
 
             ApiClient
                 .updateTask(taskListId, taskId, title)
+                .then(dispatchTask);
+        };
+    }
+
+    static toggleTask(taskListId: string, taskId: string, status: string): ThunkAction<void, AppState, void> {
+        return (dispatch: Dispatch<AppState>) => {
+            const action = this.requestToggleTask();
+            dispatch(action);
+
+            const dispatchTask = (task: Task) => {
+                const action = this.receiveToggleTask(task);
+                dispatch(action);
+            };
+
+            ApiClient
+                .toggleTask(taskListId, taskId, status)
+                .then(dispatchTask);
+        };
+    }
+
+    static deleteTask(taskListId: string, taskId: string): ThunkAction<void, AppState, void> {
+        return (dispatch: Dispatch<AppState>) => {
+            const action = this.requestDeleteTask();
+            dispatch(action);
+
+            const dispatchTask = () => {
+                const action = this.receiveDeleteTask(taskId);
+                dispatch(action);
+            };
+
+            ApiClient
+                .deleteTask(taskListId, taskId)
                 .then(dispatchTask);
         };
     }
@@ -94,7 +110,23 @@ class TaskActions {
     }
 
     private static receiveCreateTask(task: Task): TaskAction {
-        return { type: ActionType.CreateTask, task };
+        return { type: ActionType.ReceiveCreateTask, task };
+    }
+
+    private static requestUpdateTask(): TaskAction {
+        return { type: ActionType.RequestUpdateTask };
+    }
+
+    private static receiveUpdateTask(task: Task): TaskAction {
+        return { type: ActionType.ReceiveUpdateTask, task };
+    }
+
+    private static requestToggleTask(): TaskAction {
+        return { type: ActionType.RequestToggleTask };
+    }
+
+    private static receiveToggleTask(task: Task): TaskAction {
+        return { type: ActionType.ReceiveToggleTask, task };
     }
 
     private static requestDeleteTask(): TaskAction {
@@ -103,18 +135,6 @@ class TaskActions {
 
     private static receiveDeleteTask(taskId: string): TaskAction {
         return { type: ActionType.ReceiveDeleteTask, taskId };
-    }
-
-    private static requestUpdateTask(): TaskAction {
-        return { type: ActionType.RequestUpdateTask };
-    }
-
-    private static receiveUpdateTask(task: Task): TaskAction {
-        return { type: ActionType.UpdateTask, task };
-    }
-
-    static toggleTask(taskId: string): TaskAction {
-        return { type: ActionType.ToggleTask, taskId };
     }
 
 }

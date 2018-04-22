@@ -11,10 +11,16 @@ import { TaskList } from "../models/TaskList";
 function mapStateToProps(appState: AppState): AppProps {
     const taskLists = appState.taskLists.data;
     const isLoading = appState.taskLists.isFetching;
+    const tasks = appState.tasks.data;
+
+    const lastTask = tasks && tasks.length > 0 ?
+        tasks[tasks.length - 1] :
+        {};
 
     return {
         isLoading,
-        taskLists
+        taskLists,
+        lastTaskId: lastTask.id
     };
 }
 
@@ -24,12 +30,12 @@ function mapDispatchToProps(dispatch: Dispatch<any>): AppProps {
             const action = TaskListActions.getTaskLists();
             dispatch(action);
         },
-        onSelectList(taskListId: string) : void {
+        onSelectList(taskListId: string): void {
             const action = TaskActions.getTasks(taskListId);
             dispatch(action);
         },
-        onAddTask(taskListId: string): void {
-            const action = TaskActions.createTask(taskListId);
+        onAddTask(taskListId: string, previousTaskId: string): void {
+            const action = TaskActions.createTask(taskListId, previousTaskId);
             dispatch(action);
         }
     };
