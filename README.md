@@ -59,6 +59,8 @@ $ npm test
 ## Improvements
 
 - [ ] Finish unit tests
+- [ ] Error handling
+- [ ] Optimistic UI update
 - [ ] Task due date
 - [ ] Task details
 - [ ] Subtasks
@@ -69,7 +71,6 @@ $ npm test
 - [ ] Create task list
 - [ ] Remove task list
 - [ ] Rename task list
-- [ ] Improve user experience
 
 ## Built With
 
