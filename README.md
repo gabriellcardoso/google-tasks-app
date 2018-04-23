@@ -21,7 +21,7 @@ $ npm install
 
 After installing the application, you will need to configure your [Google APIs Credentials]. To configure your credentials, please follow the [Google Task First App] guide.
 
-With your Google API key and Client ID in hands, it is time to configure the application with your credentials. You will need to use both in the application. To use your credentials in the application, you will need to overwrite `{YOUR API KEY}` with your Google API key and `{YOUR CLIENT ID}` with your Google Client ID. You can find both configuration in [src/config.ts] file. 
+With your Google API key and Client ID in hands, it is time to configure the application with your credentials. You will need to use both in the application. To use your credentials, you will need to overwrite `{YOUR API KEY}` with your Google API key and `{YOUR CLIENT ID}` with your Google Client ID in `GoogleApiConfig` class. You can find it in [src/config.ts] file. 
 
 ```typescript
 class GoogleApiConfig {
