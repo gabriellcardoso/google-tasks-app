@@ -9,11 +9,11 @@ enum ActionType {
     RequestCreateTask = 'RequestCreateTask',
     ReceiveCreateTask = 'ReceiveCreateTask',
 
-    RequestUpdateTask = 'RequestUpdateTask',
-    ReceiveUpdateTask = 'ReceiveUpdateTask',
-
     RequestDeleteTask = 'RequestDeleteTask',
     ReceiveDeleteTask = 'ReceiveDeleteTask',
+
+    RequestUpdateTask = 'RequestUpdateTask',
+    ReceiveUpdateTask = 'ReceiveUpdateTask',
 
     RequestToggleTask = 'RequestToggleTask',
     ReceiveToggleTask = 'ReceiveToggleTask'

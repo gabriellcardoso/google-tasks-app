@@ -92,7 +92,7 @@ class ApiClient {
         );
     }
 
-    updateTask(taskListId: string, taskId: string, title: string) {
+    updateTask(taskListId: string, taskId: string, title: string): Promise<any> {
         return this.sendRequest(
             () => GoogleApi.client.tasks.tasks.patch({
                 tasklist: taskListId,
@@ -102,7 +102,7 @@ class ApiClient {
         );
     }
 
-    toggleTask(taskListId: string, taskId: string, status: string) {
+    toggleTask(taskListId: string, taskId: string, status: string): Promise<any> {
         const completed = status === 'completed' ?
             new Date().toISOString() :
             null;
