@@ -10,10 +10,10 @@ interface DeleteButtonProps {
 
 const DeleteButton = (props: DeleteButtonProps) => (
     <IconButton
-        onClick={event => props.onClick(event)}
+        onClick={props.onClick}
     >
         <DeleteIcon />
     </IconButton>
 );
 
-export { DeleteButton }
+export { DeleteButton, DeleteButtonProps }
