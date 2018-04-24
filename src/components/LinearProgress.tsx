@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import MuiLinearProgress from 'material-ui/LinearProgress';
+import * as React from 'react';
 
 const style: React.CSSProperties = {
     width: '50%',
