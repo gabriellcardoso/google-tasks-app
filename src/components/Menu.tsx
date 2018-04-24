@@ -1,14 +1,8 @@
+import { Divider, Drawer, Subheader } from 'material-ui';
 import * as React from 'react';
 
-import {
-    Drawer,
-    Subheader,
-    Divider
-} from 'material-ui';
-
-import { MenuItem } from './MenuItem';
-import { AddIcon } from './AddIcon';
 import { TaskList } from '../models/TaskList';
+import { MenuItem } from './MenuItem';
 
 interface MenuProps {
     open: boolean;
@@ -66,4 +60,4 @@ class Menu extends React.Component<MenuProps, MenuState> {
 
 }
 
-export { Menu }
+export { Menu, MenuProps }
