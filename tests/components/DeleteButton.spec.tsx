@@ -1,8 +1,8 @@
+import { shallow, ShallowWrapper } from 'enzyme';
+import { IconButton } from 'material-ui';
 import * as React from 'react';
-import { ShallowWrapper, shallow } from 'enzyme';
 
 import { DeleteButton, DeleteButtonProps } from '../../src/components/DeleteButton';
-import { IconButton } from 'material-ui';
 import { DeleteIcon } from '../../src/components/DeleteIcon';
 
 describe('Given a DeleteButton component', () => {

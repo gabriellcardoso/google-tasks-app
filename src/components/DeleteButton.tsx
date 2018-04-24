@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import { IconButton } from 'material-ui';
+import * as React from 'react';
 
 import { DeleteIcon } from './DeleteIcon';
 
