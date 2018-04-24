@@ -10,12 +10,12 @@ interface TaskListViewContainerProps {
 
 function mapStateToProps(appState: AppState, ownProps: TaskListViewContainerProps): TaskListViewProps {
     const { taskListId } = ownProps;
-    const isLoading = appState.tasks.fetching;
+    const loading = appState.tasks.fetching;
     const tasks = appState.tasks.data;
     const list = appState.taskLists.data.find(taskList => taskList.id === taskListId);
 
     return {
-        isLoading,
+        loading,
         list,
         tasks
     };

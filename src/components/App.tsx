@@ -9,7 +9,7 @@ import { TaskList } from '../models/TaskList';
 import { Task } from '../models/Task';
 
 interface AppProps {
-    isLoading?: boolean;
+    loading?: boolean;
     taskLists?: TaskList[];
     lastTaskId?: string;
     onStart?: () => void;
@@ -32,17 +32,17 @@ class App extends React.Component<AppProps, AppState> {
         const {
             taskLists,
             lastTaskId,
-            isLoading
+            loading
         } = nextProps;
 
-        const isNotLoading = isLoading === false;
+        const notLoading = loading === false;
         const hasTaskLists = taskLists.length;
-        const haventSelectedList = this.state.taskListId === null;
+        const hasntSelectedList = this.state.taskListId === null;
 
         if (
-            isNotLoading
+            notLoading
             && hasTaskLists
-            && haventSelectedList
+            && hasntSelectedList
         ) {
             this.selectList(taskLists[0].id);
         }
@@ -50,7 +50,7 @@ class App extends React.Component<AppProps, AppState> {
 
     render(): React.ReactElement<any> | false {
         const {
-            isLoading,
+            loading,
             taskLists,
             onSelectList,
             onAddTask,
@@ -61,7 +61,7 @@ class App extends React.Component<AppProps, AppState> {
             taskListId
         } = this.state;
 
-        if (isLoading) {
+        if (loading) {
             return (
                 <section className="app">
                     <LinearProgress />

@@ -10,7 +10,7 @@ import { TaskList } from "../models/TaskList";
 
 function mapStateToProps(appState: AppState): AppProps {
     const taskLists = appState.taskLists.data;
-    const isLoading = appState.taskLists.fetching;
+    const loading = appState.taskLists.fetching;
     const tasks = appState.tasks.data;
 
     const lastTask = tasks && tasks.length > 0 ?
@@ -18,7 +18,7 @@ function mapStateToProps(appState: AppState): AppProps {
         {};
 
     return {
-        isLoading,
+        loading,
         taskLists,
         lastTaskId: lastTask.id
     };

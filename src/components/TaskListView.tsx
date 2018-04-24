@@ -12,7 +12,7 @@ import { Task } from '../models/Task';
 import { TaskList } from '../models/TaskList';
 
 interface TaskListViewProps {
-    isLoading?: boolean;
+    loading?: boolean;
     list?: TaskList;
     tasks?: Task[];
     onAddTask?: (previousTaskId: string) => void;
@@ -29,12 +29,12 @@ class TaskListView extends React.Component<TaskListViewProps, ListViewState> {
 
     render(): React.ReactElement<any> | false {
         const {
-            isLoading,
+            loading,
             list,
             tasks
         } = this.props;
 
-        if (isLoading) {
+        if (loading) {
             return (
                 <section className="task-list-view">
                     <CircularProgress />
