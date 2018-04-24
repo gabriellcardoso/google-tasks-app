@@ -5,24 +5,36 @@ import { TaskList } from "../models/TaskList";
 
 class TaskListReducer {
 
-    static reduce(prevState = new DataState<TaskList>(), action: TaskListAction) {
+    static reduce(prevState = new DataState<TaskList>(), action: TaskListAction): DataState<TaskList> {
         switch (action.type) {
+
             case ActionType.RequestTaskLists:
-                return {
-                    ...prevState,
-                    isFetching: true
-                };
+                return TaskListReducer.setAsFetching(prevState);
+
             case ActionType.ReceiveTaskLists:
-                return {
-                    ...prevState,
-                    isFetching: false,
-                    data: action.taskLists
-                };
+                return TaskListReducer.setData(prevState, action);
+
             default:
                 return prevState;
+
         }
     }
 
+    private static setAsFetching(prevState: DataState<TaskList>): DataState<TaskList> {
+        return {
+            ...prevState,
+            fetching: true
+        };
+    }
+
+    private static setData(prevState: DataState<TaskList>, action: TaskListAction): DataState<TaskList> {
+        return {
+            ...prevState,
+            fetching: false,
+            data: action.taskLists
+        };
+    }
+    
 }
 
 export { TaskListReducer }
