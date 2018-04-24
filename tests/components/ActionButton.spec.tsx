@@ -1,9 +1,10 @@
 import * as React from 'react';
-import * as renderer from 'react-test-renderer';
 import { getMuiTheme } from 'material-ui/styles';
 import { shallow } from 'enzyme';
 
 import { ActionButton } from '../../src/components/ActionButton';
+import { FloatingActionButton } from 'material-ui';
+import { AddIcon } from '../../src/components/AddIcon';
 
 describe('Given an ActionButton component', () => {
 
@@ -15,9 +16,20 @@ describe('Given an ActionButton component', () => {
         { context: muiTheme }
     );
 
+    beforeEach(() => {
+        this.floatingActionButton = component.find(FloatingActionButton);
+    });
+
     it('should have a floating action button', () => {
-        const nodes = component.find('FloatingActionButton');
-        expect(nodes).toHaveLength(1);
+        expect(this.floatingActionButton).toHaveLength(1);
+    });
+
+    it('should have "action-button" as floating action button', () => {
+        expect(this.floatingActionButton.hasClass('action-button')).toEqual(true);
+    });
+
+    it('should have an add icon', () => {
+        expect(component.find(AddIcon)).toHaveLength(1);
     });
 
     describe('when floating action button clicked', () => {
