@@ -10,7 +10,7 @@ import { logger } from './logger';
 
 import { ThemeProvider } from './utils/ThemeProvider';
 import { Provider as DataProvider } from 'react-redux';
-import AppContainer from './containers/App';
+import { AppContainer } from './containers/App';
 
 const middlewares = applyMiddleware(thunk, logger);
 const store = createStore(reducers, middlewares);

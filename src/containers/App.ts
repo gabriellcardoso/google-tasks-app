@@ -1,12 +1,10 @@
-import { Dispatch } from "redux";
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import { App, AppProps } from "../components/App";
-import { TaskListActions } from "../actions/TaskList";
-import { TaskActions } from "../actions/Task";
-import { AppState } from "../states/App";
-import ApiClient from '../utils/ApiClient';
-import { TaskList } from "../models/TaskList";
+import { TaskActions } from '../actions/Task';
+import { TaskListActions } from '../actions/TaskList';
+import { App, AppProps } from '../components/App';
+import { AppState } from '../states/App';
 
 function mapStateToProps(appState: AppState): AppProps {
     const taskLists = appState.taskLists.data;
@@ -41,7 +39,9 @@ function mapDispatchToProps(dispatch: Dispatch<any>): AppProps {
     };
 }
 
-export default connect(
+const AppContainer = connect(
     mapStateToProps,
     mapDispatchToProps
 )(App as any);
+
+export { AppContainer }
