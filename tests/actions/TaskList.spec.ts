@@ -1,28 +1,40 @@
 jest.mock('../../src/utils/ApiClient');
 
-import ApiClient from '../../src/utils/ApiClient';
-import { TaskListAction, TaskListActions } from '../../src/actions/TaskList';
+import { ThunkAction } from 'redux-thunk';
+
 import { ActionType } from '../../src/actions/ActionType';
+import { TaskListActions } from '../../src/actions/TaskList';
+import { TaskList } from '../../src/models/TaskList';
+import { AppState } from '../../src/states/App';
+import ApiClient from '../../src/utils/ApiClient';
+
 
 describe('Given a TaskListActions', () => {
 
+    const taskList: TaskList[] = [
+        { id: '1', title: 'TODO List' }
+    ];
+
+    const dispatch = jest.fn();
+    let thunkAction: ThunkAction<void, AppState, any>;
+    
     describe('when getting task lists', () => {
         beforeEach(() => {
             jest.spyOn(ApiClient, 'getTasksLists');
-            this.dispatch = jest.fn();
-            this.action = TaskListActions.getTaskLists();
-            this.action(this.dispatch);
+            dispatch.mockClear();
+            thunkAction = TaskListActions.getTaskLists();
+            thunkAction(dispatch, null, null);
         });
-        test('should dispatch a RequestTaskLists action', () => {
-            expect(this.dispatch).toHaveBeenCalledWith({ type: ActionType.RequestTaskLists });
+        it('should dispatch a RequestTaskLists action', () => {
+            expect(dispatch).toHaveBeenCalledWith({ type: ActionType.RequestTaskLists });
         });
-        test('should request to get task lists', () => {
+        it('should request to get task lists', () => {
             expect(ApiClient.getTasksLists).toHaveBeenCalled();
         });
-        test('should dispatch a ReceiveTaskList action with request result', () => {
-            expect(this.dispatch).toHaveBeenCalledWith({
+        it('should dispatch a ReceiveTaskList action with request result', () => {
+            expect(dispatch).toHaveBeenCalledWith({
                 type: ActionType.ReceiveTaskLists,
-                taskLists: [{ id: '1', title: 'TODO List' }]
+                taskLists: taskList
             });
         });
     });

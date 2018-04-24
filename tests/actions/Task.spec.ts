@@ -1,38 +1,47 @@
 jest.mock('../../src/utils/ApiClient');
 
-import ApiClient from '../../src/utils/ApiClient';
-import { TaskActions } from '../../src/actions/Task';
+import { ThunkAction } from 'redux-thunk';
+
 import { ActionType } from '../../src/actions/ActionType';
+import { TaskActions } from '../../src/actions/Task';
+import { Task } from '../../src/models/Task';
+import { AppState } from '../../src/states/App';
+import ApiClient from '../../src/utils/ApiClient';
 
 describe('Given a TaskActions', () => {
 
+    const dispatch = jest.fn();
+
+    const task: Task = {
+        id: '1',
+        title: 'Task 1',
+        status: 'needsAction',
+        completed: null,
+        position: '00001'
+    };
+
+    let thunkAction: ThunkAction<void, AppState, any>;
+
     beforeEach(() => {
-        this.task = {
-            id: '1',
-            title: 'Task 1',
-            status: 'needsAction',
-            completed: null,
-            position: '00001'
-        };
-        this.dispatch = jest.fn();
+        dispatch.mockClear();
     });
 
     describe('when getting tasks', () => {
         beforeEach(() => {
             jest.spyOn(ApiClient, 'getTasks');
-            this.action = TaskActions.getTasks('1');
-            this.action(this.dispatch);
+            thunkAction = TaskActions.getTasks('1');
+            thunkAction(dispatch, null, null);
         });
         it('should dispatch RequestTasks action', () => {
-            expect(this.dispatch).toHaveBeenCalledWith({ type: ActionType.RequestTasks });
+            expect(dispatch).toHaveBeenCalledWith({ type: ActionType.RequestTasks });
         });
         it('should request to get all tasks from a task list', () => {
             expect(ApiClient.getTasks).toHaveBeenCalledWith('1');
         });
         it('should dispatch ReceiveTasks action', () => {
-            expect(this.dispatch).toHaveBeenCalledWith({
+            expect(dispatch).toHaveBeenCalledWith({
                 type: ActionType.ReceiveTasks,
-                tasks: [this.task]
+                tasks: [task]
             });
         });
     });
@@ -40,19 +49,19 @@ describe('Given a TaskActions', () => {
     describe('when creating tasks', () => {
         beforeEach(() => {
             jest.spyOn(ApiClient, 'createTask');
-            this.action = TaskActions.createTask('1', '2', 'Task 1');
-            this.action(this.dispatch);
+            thunkAction = TaskActions.createTask('1', '2', 'Task 1');
+            thunkAction(dispatch, null, null);
         });
         it('should dispatch RequestCreateTask action', () => {
-            expect(this.dispatch).toHaveBeenCalledWith({ type: ActionType.RequestCreateTask });
+            expect(dispatch).toHaveBeenCalledWith({ type: ActionType.RequestCreateTask });
         });
         it('should request to create a task for a task list', () => {
             expect(ApiClient.createTask).toHaveBeenCalledWith('1', '2', 'Task 1');
         });
         it('should dispatch ReceiveCreateTask action', () => {
-            expect(this.dispatch).toHaveBeenCalledWith({
+            expect(dispatch).toHaveBeenCalledWith({
                 type: ActionType.ReceiveCreateTask,
-                task: this.task
+                task: task
             });
         });
     });
@@ -60,19 +69,19 @@ describe('Given a TaskActions', () => {
     describe('when updating tasks', () => {
         beforeEach(() => {
             jest.spyOn(ApiClient, 'updateTask');
-            this.action = TaskActions.updateTask('1', '2', 'Task 1');
-            this.action(this.dispatch);
+            thunkAction = TaskActions.updateTask('1', '2', 'Task 1');
+            thunkAction(dispatch, null, null);
         });
         it('should dispatch RequestUpdateTask action', () => {
-            expect(this.dispatch).toHaveBeenCalledWith({ type: ActionType.RequestUpdateTask });
+            expect(dispatch).toHaveBeenCalledWith({ type: ActionType.RequestUpdateTask });
         });
         it('should request to update a task from a task list', () => {
             expect(ApiClient.updateTask).toHaveBeenCalledWith('1', '2', 'Task 1');
         });
         it('should dispatch ReceiveUpdateTask action', () => {
-            expect(this.dispatch).toHaveBeenCalledWith({
+            expect(dispatch).toHaveBeenCalledWith({
                 type: ActionType.ReceiveUpdateTask,
-                task: this.task
+                task: task
             });
         });
     });
@@ -80,19 +89,19 @@ describe('Given a TaskActions', () => {
     describe('when toggling tasks', () => {
         beforeEach(() => {
             jest.spyOn(ApiClient, 'toggleTask');
-            this.action = TaskActions.toggleTask('1', '2', 'completed');
-            this.action(this.dispatch);
+            thunkAction = TaskActions.toggleTask('1', '2', 'completed');
+            thunkAction(dispatch, null, null);
         });
         it('should dispatch RequestToggleTask action', () => {
-            expect(this.dispatch).toHaveBeenCalledWith({ type: ActionType.RequestToggleTask });
+            expect(dispatch).toHaveBeenCalledWith({ type: ActionType.RequestToggleTask });
         });
         it('should request to update a task from a task list', () => {
             expect(ApiClient.toggleTask).toHaveBeenCalledWith('1', '2', 'completed');
         });
         it('should dispatch ReceiveToggleTask action', () => {
-            expect(this.dispatch).toHaveBeenCalledWith({
+            expect(dispatch).toHaveBeenCalledWith({
                 type: ActionType.ReceiveToggleTask,
-                task: this.task
+                task: task
             });
         });
     });
@@ -100,17 +109,17 @@ describe('Given a TaskActions', () => {
     describe('when deleting tasks', () => {
         beforeEach(() => {
             jest.spyOn(ApiClient, 'deleteTask');
-            this.action = TaskActions.deleteTask('1', '2');
-            this.action(this.dispatch);
+            thunkAction = TaskActions.deleteTask('1', '2');
+            thunkAction(dispatch, null, null);
         });
         it('should dispatch RequestDeleteTask action', () => {
-            expect(this.dispatch).toHaveBeenCalledWith({ type: ActionType.RequestDeleteTask });
+            expect(dispatch).toHaveBeenCalledWith({ type: ActionType.RequestDeleteTask });
         });
         it('should request to update a task from a task list', () => {
             expect(ApiClient.deleteTask).toHaveBeenCalledWith('1', '2');
         });
         it('should dispatch ReceiveDeleteTask action', () => {
-            expect(this.dispatch).toHaveBeenCalledWith({
+            expect(dispatch).toHaveBeenCalledWith({
                 type: ActionType.ReceiveDeleteTask,
                 taskId: '2'
             });

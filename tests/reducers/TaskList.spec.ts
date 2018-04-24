@@ -6,50 +6,57 @@ import { TaskList } from '../../src/models/TaskList';
 
 describe('Given a TaskListReducer', () => {
 
+    const taskLists: TaskList[] = [
+        { id: '1', title: 'TODO List' }
+    ];
+
+    let previousState: DataState<TaskList>;
+    let nextState: DataState<TaskList>;
+    let action: TaskListAction;
+
     beforeEach(() => {
-        this.previousState = new DataState<TaskList>();
+        previousState = new DataState<TaskList>();
     });
 
     describe('when reducing a RequestTaskLists action', () => {
         beforeEach(() => {
-            this.previousState.fetching = false;
-            this.action = { type: ActionType.RequestTaskLists };
-            this.nextState = TaskListReducer.reduce(this.previousState, this.action);
+            previousState.fetching = false;
+            action = { type: ActionType.RequestTaskLists };
+            nextState = TaskListReducer.reduce(previousState, action);
         });
         it('should return a new state', () => {
-            expect(this.nextState).not.toBe(this.previousState);
+            expect(nextState).not.toBe(previousState);
         });
-        it('should have fetching as true', () => {
-            expect(this.nextState.fetching).toEqual(true);
+        it('should return a state with fetching as true', () => {
+            expect(nextState.fetching).toEqual(true);
         });
     });
 
     describe('when reducing a ReceiveTaskLists action', () => {
         beforeEach(() => {
-            this.previousState.fetching = true;
-            this.previousState.data = [];
-            this.taskLists = [{ id: '1', title: 'TODO List'}] as TaskList[];
-            this.action = { type: ActionType.ReceiveTaskLists, taskLists: this.taskLists };
-            this.nextState = TaskListReducer.reduce(this.previousState, this.action);
+            previousState.fetching = true;
+            previousState.data = [];
+            action = { type: ActionType.ReceiveTaskLists, taskLists };
+            nextState = TaskListReducer.reduce(previousState, action);
         });
         it('should return a new state', () => {
-            expect(this.nextState).not.toBe(this.previousState);
+            expect(nextState).not.toBe(previousState);
         });
-        it('should have fetching as false', () => {
-            expect(this.nextState.fetching).toEqual(false);
+        it('should return a state with fetching as false', () => {
+            expect(nextState.fetching).toEqual(false);
         });
-        it('should have data equal to action task lists', () => {
-            expect(this.nextState.data).toEqual(this.taskLists);
+        it('should return a state with data equal to action task lists', () => {
+            expect(nextState.data).toEqual(taskLists);
         });
     });
 
     describe('when reducing any other action', () => {
         beforeEach(() => {
-            this.action = { type: ActionType.RequestTasks };
-            this.nextState = TaskListReducer.reduce(this.previousState, this.action);
+            action = { type: ActionType.RequestTasks };
+            nextState = TaskListReducer.reduce(previousState, action);
         });
         it('should return previous state', () => {
-            expect(this.nextState).toBe(this.previousState);
+            expect(nextState).toBe(previousState);
         });
     });
 
