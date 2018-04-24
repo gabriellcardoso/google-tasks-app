@@ -4,7 +4,7 @@ import ApiClient from '../../src/utils/ApiClient';
 import { TaskActions } from '../../src/actions/Task';
 import { ActionType } from '../../src/actions/ActionType';
 
-describe('Given a TaskActions factory', () => {
+describe('Given a TaskActions', () => {
 
     beforeEach(() => {
         this.task = {

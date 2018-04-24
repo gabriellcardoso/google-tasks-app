@@ -1,6 +1,6 @@
 import { ActionType } from '../../src/actions/ActionType';
 
-describe('Given an ActionType enum', () => {
+describe('Given an ActionType', () => {
 
     it('should have RequestTaskLists', () => {
         expect(ActionType.RequestTaskLists).toEqual('RequestTaskLists');
