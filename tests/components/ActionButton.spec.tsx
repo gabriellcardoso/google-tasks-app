@@ -12,13 +12,13 @@ describe('Given an ActionButton component', () => {
 
     describe('when rendering', () => {
         it('should have a floating action button', () => {
-            expect(component.find(FloatingActionButton)).toHaveLength(1);
+            expect(component.find(FloatingActionButton).exists()).toEqual(true);
         });
         it('should have "action-button" as floating action button', () => {
             expect(component.find(FloatingActionButton).hasClass('action-button')).toEqual(true);
         });
         it('should have an add icon', () => {
-            expect(component.find(AddIcon)).toHaveLength(1);
+            expect(component.find(AddIcon).exists()).toEqual(true);
         });
     });
 
