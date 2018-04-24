@@ -1,6 +1,5 @@
-import * as React from 'react';
-
 import MuiMenuItem from 'material-ui/MenuItem';
+import * as React from 'react';
 
 interface MenuItemProps {
     children: React.ReactNode;
@@ -15,4 +14,4 @@ const MenuItem = (props: MenuItemProps) => (
     </MuiMenuItem>
 );
 
-export { MenuItem }
+export { MenuItem, MenuItemProps }
