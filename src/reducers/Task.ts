@@ -46,7 +46,7 @@ class TaskReducer {
     private static setAsFetching(prevState: DataState<Task>): DataState<Task> {
         return {
             ...prevState,
-            isFetching: true
+            fetching: true
         };
     }
 
@@ -54,14 +54,14 @@ class TaskReducer {
         return {
             ...prevState,
             data: action.tasks,
-            isFetching: false
+            fetching: false
         };
     }
 
     private static setAsCreating(prevState: DataState<Task>): DataState<Task> {
         return {
             ...prevState,
-            isCreating: true
+            creating: true
         };
     }
 
@@ -70,14 +70,14 @@ class TaskReducer {
         return {
             ...prevState,
             data: tasks,
-            isCreating: false
+            creating: false
         };
     }
 
     private static setAsDeleting(prevState: DataState<Task>): DataState<Task> {
         return {
             ...prevState,
-            isDeleting: true
+            deleting: true
         };
     }
 
@@ -87,14 +87,14 @@ class TaskReducer {
         return {
             ...prevState,
             data: tasks,
-            isDeleting: false
+            deleting: false
         };
     }
 
     private static setAsUpdating(prevState: DataState<Task>): DataState<Task> {
         return {
             ...prevState,
-            isUpdating: true
+            updating: true
         };
     }
 
@@ -108,7 +108,7 @@ class TaskReducer {
         return {
             ...prevState,
             data: tasks,
-            isUpdating: false
+            updating: false
         };
     }
 
@@ -122,7 +122,7 @@ class TaskReducer {
         return {
             ...prevState,
             data: tasks,
-            isUpdating: false
+            updating: false
         };
     }
 

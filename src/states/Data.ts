@@ -1,9 +1,9 @@
 class DataState<T> {
     data: T[] = new Array<T>();
-    isFetching = false;
-    isCreating = false;
-    isUpdating = false;
-    isDeleting = false;
+    fetching = false;
+    creating = false;
+    updating = false;
+    deleting = false;
 }
 
 export { DataState }
