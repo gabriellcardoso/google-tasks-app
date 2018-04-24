@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { getMuiTheme } from 'material-ui/styles';
 import { shallow } from 'enzyme';
 
 import { ActionButton } from '../../src/components/ActionButton';
@@ -8,28 +7,19 @@ import { AddIcon } from '../../src/components/AddIcon';
 
 describe('Given an ActionButton component', () => {
 
-    const muiTheme = getMuiTheme();
     const callback = jest.fn();
+    const component = shallow(<ActionButton onClick={callback} />);
 
-    const component = shallow(
-        <ActionButton onClick={callback} />,
-        { context: muiTheme }
-    );
-
-    beforeEach(() => {
-        this.floatingActionButton = component.find(FloatingActionButton);
-    });
-
-    it('should have a floating action button', () => {
-        expect(this.floatingActionButton).toHaveLength(1);
-    });
-
-    it('should have "action-button" as floating action button', () => {
-        expect(this.floatingActionButton.hasClass('action-button')).toEqual(true);
-    });
-
-    it('should have an add icon', () => {
-        expect(component.find(AddIcon)).toHaveLength(1);
+    describe('when rendering', () => {
+        it('should have a floating action button', () => {
+            expect(component.find(FloatingActionButton)).toHaveLength(1);
+        });
+        it('should have "action-button" as floating action button', () => {
+            expect(component.find(FloatingActionButton).hasClass('action-button')).toEqual(true);
+        });
+        it('should have an add icon', () => {
+            expect(component.find(AddIcon)).toHaveLength(1);
+        });
     });
 
     describe('when floating action button clicked', () => {
