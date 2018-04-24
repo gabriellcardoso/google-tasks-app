@@ -14,4 +14,4 @@ const AppBar = (props: AppBarProps) => (
     />
 );
 
-export { AppBar }
+export { AppBar, AppBarProps }
