@@ -15,21 +15,6 @@ import { AppState as ApplicationState } from '../../src/states/App';
 
 jest.mock('../../src/utils/ApiClient.ts');
 
-function mountApp(props: AppProps, muiTheme: MuiTheme, store: mockStore<any>): ReactWrapper<AppProps, AppState> {
-    const mountOptions = {
-        context: {
-            muiTheme,
-            store
-        },
-        childContextTypes: {
-            muiTheme: PropTypes.object.isRequired,
-            store: PropTypes.object.isRequired,
-        }
-    };
-
-    return mount<AppProps, AppState>(<App {...props} />, mountOptions);
-}
-
 describe('Given an App component', () => {
 
     const muiTheme = getMuiTheme();
@@ -158,3 +143,18 @@ describe('Given an App component', () => {
     });
 
 });
+
+function mountApp(props: AppProps, muiTheme: MuiTheme, store: mockStore<any>): ReactWrapper<AppProps, AppState> {
+    const mountOptions = {
+        context: {
+            muiTheme,
+            store
+        },
+        childContextTypes: {
+            muiTheme: PropTypes.object.isRequired,
+            store: PropTypes.object.isRequired,
+        }
+    };
+
+    return mount<AppProps, AppState>(<App {...props} />, mountOptions);
+}
