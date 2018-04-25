@@ -1,10 +1,5 @@
+import { Checkbox, ListItem, TextField } from 'material-ui';
 import * as React from 'react';
-
-import {
-    ListItem,
-    Checkbox,
-    TextField
-} from 'material-ui';
 
 import { Task } from '../models/Task';
 import { DeleteButton } from './DeleteButton';
@@ -53,9 +48,9 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
                     fullWidth={true}
                     underlineShow={false}
                     autoFocus={true}
-                    onChange={event => this.updateText(event)}
+                    onChange={(event, value) => this.updateText(value)}
                     onBlur={event => this.updateTask()}
-                    onKeyPress={event => this.handleKeyPress(event)}
+                    onKeyPress={event => this.handleKeyPress(event.key)}
                 />
             </ListItem>
         );
@@ -82,15 +77,14 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
         onToggle(task.id, status);
     }
 
-    private updateText(event: React.ChangeEvent<any>): void {
-        const title = event.target.value;
+    private updateText(title: string): void {
         this.setState({ title });
     }
 
-    private handleKeyPress(event: React.KeyboardEvent<{}>) {
+    private handleKeyPress(key: string) {
         const { onPressEnter } = this.props;
 
-        if (event.key === 'Enter') {
+        if (key === 'Enter') {
             onPressEnter();
         }
     }
@@ -114,4 +108,4 @@ class TaskItem extends React.Component<TaskItemProps, TaskItemState> {
 }
 
 
-export { TaskItem }
+export { TaskItem, TaskItemProps, TaskItemState }
