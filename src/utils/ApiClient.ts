@@ -37,6 +37,16 @@ class ApiClient {
         this.tryToSendRequest();
     }
 
+    private tryToSendRequest(): void {
+        if (this.isAuthorized && this.requests.length) {
+            this.requests.forEach(request => request());
+            this.requests = [];
+        }
+        else if (this.auth) {
+            this.auth.signIn();
+        }
+    }
+
     private sendRequest(request: () => Promise<any>) {
         return new Promise((resolve, reject) => {
             this.requests.push(
@@ -49,17 +59,7 @@ class ApiClient {
         });
     }
 
-    private tryToSendRequest(): void {
-        if (this.isAuthorized && this.requests.length) {
-            this.requests.forEach(request => request());
-            this.requests = [];
-        }
-        else if (this.auth) {
-            this.auth.signIn();
-        }
-    }
-
-    getTasksLists(): Promise<any> {
+    getTaskLists(): Promise<any> {
         return this.sendRequest(
             () => GoogleApi.client.tasks.tasklists.list()
         );
@@ -79,15 +79,6 @@ class ApiClient {
                 tasklist: taskListId,
                 previous: previousTaskId,
                 title
-            })
-        );
-    }
-
-    deleteTask(taskListId: string, taskId: string): Promise<any> {
-        return this.sendRequest(
-            () => GoogleApi.client.tasks.tasks.delete({
-                tasklist: taskListId,
-                task: taskId
             })
         );
     }
@@ -117,6 +108,17 @@ class ApiClient {
         );
     }
 
+    deleteTask(taskListId: string, taskId: string): Promise<any> {
+        return this.sendRequest(
+            () => GoogleApi.client.tasks.tasks.delete({
+                tasklist: taskListId,
+                task: taskId
+            })
+        );
+    }
+
 }
+
+export { ApiClient }
 
 export default new ApiClient();

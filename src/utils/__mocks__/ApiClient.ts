@@ -16,7 +16,7 @@ class ApiClientMock {
         position: '00001'
     };
 
-    getTasksLists(): Promise<any> {
+    getTaskLists(): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             resolve({ items: [this.taskList] });
         });

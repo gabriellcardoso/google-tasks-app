@@ -24,7 +24,7 @@ class TaskListActions {
             };
 
             ApiClient
-                .getTasksLists()
+                .getTaskLists()
                 .then(result => result.items)
                 .then(dispatchTaskLists);
         };

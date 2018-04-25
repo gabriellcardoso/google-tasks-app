@@ -20,7 +20,7 @@ describe('Given a TaskListActions', () => {
     
     describe('when getting task lists', () => {
         beforeEach(() => {
-            jest.spyOn(ApiClient, 'getTasksLists');
+            jest.spyOn(ApiClient, 'getTaskLists');
             dispatch.mockClear();
             thunkAction = TaskListActions.getTaskLists();
             thunkAction(dispatch, null, null);
@@ -29,7 +29,7 @@ describe('Given a TaskListActions', () => {
             expect(dispatch).toHaveBeenCalledWith({ type: ActionType.RequestTaskLists });
         });
         it('should request to get task lists', () => {
-            expect(ApiClient.getTasksLists).toHaveBeenCalled();
+            expect(ApiClient.getTaskLists).toHaveBeenCalled();
         });
         it('should dispatch a ReceiveTaskList action with request result', () => {
             expect(dispatch).toHaveBeenCalledWith({
