@@ -1,12 +1,11 @@
 import * as React from 'react';
 
+import { TaskListViewContainer } from '../containers/TaskListView';
+import { TaskList } from '../models/TaskList';
+import { ActionButton } from './ActionButton';
 import { AppBar } from './AppBar';
 import { LinearProgress } from './LinearProgress';
 import { Menu } from './Menu';
-import { TaskListViewContainer } from '../containers/TaskListView';
-import { ActionButton } from './ActionButton';
-import { TaskList } from '../models/TaskList';
-import { Task } from '../models/Task';
 
 interface AppProps {
     loading?: boolean;
@@ -111,4 +110,4 @@ class App extends React.Component<AppProps, AppState> {
 }
 
 
-export { App, AppProps }
+export { App, AppProps, AppState }
