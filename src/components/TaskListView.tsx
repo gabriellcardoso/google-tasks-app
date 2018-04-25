@@ -1,15 +1,10 @@
+import { Divider, Paper, Subheader } from 'material-ui';
 import * as React from 'react';
 
-import {
-    Paper,
-    Subheader,
-    Divider,
-} from 'material-ui';
-
-import { CircularProgress } from './CircularProgress';
-import { TaskItem } from './TaskItem';
 import { Task } from '../models/Task';
 import { TaskList } from '../models/TaskList';
+import { CircularProgress } from './CircularProgress';
+import { TaskItem } from './TaskItem';
 
 interface TaskListViewProps {
     loading?: boolean;
