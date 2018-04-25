@@ -2,15 +2,14 @@ import 'es6-shim';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-
-import { createStore, applyMiddleware } from 'redux';
-import { reducers } from './reducers';
-import thunk from 'redux-thunk';
-import { logger } from './logger';
-
-import { ThemeProvider } from './utils/ThemeProvider';
 import { Provider as DataProvider } from 'react-redux';
+import { applyMiddleware, createStore } from 'redux';
+import thunk from 'redux-thunk';
+
+import { ThemeProvider } from './components/ThemeProvider';
 import { AppContainer } from './containers/App';
+import { logger } from './logger';
+import { reducers } from './reducers';
 
 const middlewares = applyMiddleware(thunk, logger);
 const store = createStore(reducers, middlewares);

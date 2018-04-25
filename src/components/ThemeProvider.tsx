@@ -24,4 +24,4 @@ const ThemeProvider = (props: ThemeProviderProps) => (
     </MuiThemeProvider>
 );
 
-export { ThemeProvider }
+export { ThemeProvider, ThemeProviderProps }
