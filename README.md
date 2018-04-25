@@ -58,9 +58,13 @@ $ npm test
 
 ## Improvements
 
-- [ ] Finish unit tests
+- [x] Finish unit tests
+- [ ] Fix Typescript paths
+- [ ] Improve tests
+- [ ] Config in a JSON file
 - [ ] Error handling
 - [ ] Optimistic UI update
+- [ ] Better loading UI
 - [ ] Task due date
 - [ ] Task details
 - [ ] Subtasks
