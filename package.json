@@ -56,7 +56,7 @@
     "prop-types": "^15.6.1",
     "react-test-renderer": "^16.3.2",
     "redux-test-utils": "^0.2.2",
-    "source-map-loader": "^0.2.3",
+    "source-map-loader": "^0.2.4",
     "ts-jest": "^22.4.4",
     "webpack-dev-server": "^3.1.3"
   },
